@@ -1,0 +1,15 @@
+@attr Hair 
+@attr Height 
+@attr Weight 
+@attr Lotion 
+
+@class Sunburnt
+
+Blonde,Average,Light,No,Yes
+Blonde,Tall,Average,Yes,No
+Brown,Short,Average,Yes,No
+Blonde,Short,Average,No,Yes
+Red,Average,Heavy,No,Yes
+Brown,Tall,Heavy,No,No
+Brown,Average,Heavy,No,No
+Blonde,Short,Light,Yes,No
