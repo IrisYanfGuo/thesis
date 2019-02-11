@@ -1,0 +1,118 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{natbib,alifexi}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{times}
+
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\title{Reproducing the result of the paper: ``Local Coordination in Online Distributed Constraint Optimization Problems'' \citep{Brys2012} \\ \large Learning dynamics (INFO-F-409)}
+\author{Leon Babin$^1$, Yanfang Guo$^2$, Anthony Piron$^1$ \and Wenjia Wang$^2$ \\
+\mbox{}\\
+$^1$Master in Bio-informatics and Modelling, Université Libre de Bruxelles \\
+$^2$Vrije Universiteit Brussel}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  
+\end{abstract}
+
+\section{Introduction}
+
+
+\section{LJAL}
+
+\begin{algorithm}[tph]
+  \caption{The LJAL algorithm. Update Qs. Return reward.}
+  \label{alg:ljal}
+  \begin{algorithmic}[1]
+    \Function{LJAL\_One\_Step}{agents, graph}
+    \ForAll{agent in agents}
+    \State $evs\gets EVs(graph.nodes[agent], agent)$
+    \State $actions[agent]\gets BoltzmannAction(evs)$
+    \EndFor
+
+    \State $R\gets Reward(actions)$
+
+    \ForAll{node in graph.nodes}
+    \State $sel.actions\gets actions[node.successors]$
+    \State $node.Q[sel.actions] \mathrel{+}\gets$
+    \State \hspace{1cm}$\alpha * (R - node.Q[sel.actions])$
+    \State $node.N[sel.actions]\mathrel{+}\gets 1$
+    \EndFor
+    \State \Return $R$
+    \EndFunction
+    \State
+    \ForAll{t in MaxTime}
+    \State \Call{LJAL\_One\_Step}{agents, graph}
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+The LJAL algorithm is provided at \ref{alg:ljal}. A graph is a list of nodes. Each node contains a list of successors, a $Q$ matrice (size $\bigtimes_{s \in successors} a_s$ where $a_s$ is the number of actions for the successor $s$) and $N$ a matrix (same size) for counting the number of time an action is chosen. 
+
+\begin{figure*}[tp]
+  \centering
+  \includegraphics[scale=0.8]{part1_plot.png}
+  \caption{Comparison of independent learners, joint action learns and local joint action learners on a distributed bandit problem.}
+  \label{fig:part1}
+\end{figure*}
+
+\begin{table*}[tp]
+  \centering
+  \include{part1_table}
+  \caption{Distributed bandit problem: Comparison of speed and solution quality.}
+  \label{tab:part1}
+\end{table*}
+
+
+\section{DCOP}
+
+\begin{figure*}[tp]
+  \centering
+  \includegraphics[scale=0.8]{part2_plot.png}
+  \caption{Comparison of independent learners, joint action learns and local joint action learners on a distributed constraint optimization problem.}
+  \label{fig:part2}
+\end{figure*}
+
+\begin{table*}[tp]
+  \centering
+  \include{part2_table}
+  \caption{distributed constraint optimization problem: comparison of speed and solution quality.}
+  \label{tab:part2}
+\end{table*}
+
+\section{Learning coordination graphs}
+
+\begin{algorithm}[tph]
+  \caption{Coordination graph learning algorithm.}
+  \label{alg:LCG}
+  \begin{algorithmic}
+    \Function{LCG\_One\_Step}{agents}
+    
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+\section{Acknowledgements}
+
+\footnotesize
+\bibliographystyle{apalike}
+\bibliography{bib}
+
+
+\end{document}
